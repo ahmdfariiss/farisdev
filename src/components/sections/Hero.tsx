@@ -4,14 +4,20 @@ import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { HiArrowRight } from 'react-icons/hi';
 import { heroSocialLinks } from '@/constants';
+import { useCMSProfile } from '@/hooks/useCMSData';
 
 export default function Hero() {
+  const profile = useCMSProfile();
+
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  // Build role animation sequence
+  const roleSequence = profile.role.flatMap((role) => [role, 2000]);
 
   return (
     <section
@@ -27,7 +33,7 @@ export default function Hero() {
           transition={{ duration: 1 }}
           className="absolute inset-0 border border-white/5 -m-12 md:-m-20"
         />
-        
+
         {/* Corner Accents */}
         <div className="absolute -top-12 -left-12 md:-top-20 md:-left-20 w-8 h-8 border-l border-t border-white/20" />
         <div className="absolute -top-12 -right-12 md:-top-20 md:-right-20 w-8 h-8 border-r border-t border-white/20" />
@@ -42,7 +48,7 @@ export default function Hero() {
           className="mb-8"
         >
           <span className="text-xs tracking-[0.4em] text-neutral-500 uppercase">
-            Portfolio / 2024
+            Portfolio / {profile.year}
           </span>
         </motion.div>
 
@@ -53,7 +59,7 @@ export default function Hero() {
           transition={{ delay: 0.4, duration: 0.8 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-6 tracking-tight"
         >
-          Your Name
+          {profile.name}
         </motion.h1>
 
         {/* Animated Role */}
@@ -64,14 +70,7 @@ export default function Hero() {
           className="text-lg md:text-xl text-neutral-400 mb-12 h-8"
         >
           <TypeAnimation
-            sequence={[
-              'Web Developer',
-              2000,
-              'IoT Enthusiast',
-              2000,
-              'Creative Coder',
-              2000,
-            ]}
+            sequence={roleSequence}
             repeat={Infinity}
             cursor={true}
           />
@@ -85,7 +84,9 @@ export default function Hero() {
           className="flex items-center justify-center gap-6 mb-12"
         >
           <div className="w-16 md:w-24 h-px bg-white/20" />
-          <span className="text-[10px] text-neutral-600 tracking-[0.3em]">SEMESTER 5</span>
+          <span className="text-[10px] text-neutral-600 tracking-[0.3em]">
+            {profile.semester.toUpperCase()}
+          </span>
           <div className="w-16 md:w-24 h-px bg-white/20" />
         </motion.div>
 
@@ -105,7 +106,7 @@ export default function Hero() {
             View Projects
             <HiArrowRight className="group-hover:translate-x-1 transition-transform" />
           </motion.button>
-          
+
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -148,7 +149,9 @@ export default function Hero() {
         transition={{ delay: 2 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-[10px] tracking-[0.3em] text-neutral-600 uppercase">Scroll</span>
+        <span className="text-[10px] tracking-[0.3em] text-neutral-600 uppercase">
+          Scroll
+        </span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}

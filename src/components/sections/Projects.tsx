@@ -4,18 +4,21 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
-import { projects } from '@/constants';
+import { useCMSProjects } from '@/hooks/useCMSData';
+import Image from 'next/image';
 
 export default function Projects() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [activeFilter, setActiveFilter] = useState('All');
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const projects = useCMSProjects();
 
   const filters = ['All', 'Web', 'IoT'];
-  const filteredProjects = activeFilter === 'All' 
-    ? projects 
-    : projects.filter(p => p.category === activeFilter);
+  const filteredProjects =
+    activeFilter === 'All'
+      ? projects
+      : projects.filter((p) => p.category === activeFilter);
 
   return (
     <section id="projects" className="py-32 relative bg-neutral-950/50">
@@ -39,7 +42,7 @@ export default function Projects() {
             >
               Projects
             </motion.h2>
-            
+
             {/* Filter Tabs */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -64,17 +67,18 @@ export default function Projects() {
           </div>
 
           {/* Bento Grid */}
-          <motion.div 
+          <motion.div
             layout
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[200px]"
           >
             {filteredProjects.map((project, index) => {
               const isHovered = hoveredProject === index;
-              const gridClass = project.size === 'large' 
-                ? 'md:col-span-2 md:row-span-2' 
-                : project.size === 'medium'
-                ? 'md:row-span-2'
-                : '';
+              const gridClass =
+                project.size === 'large'
+                  ? 'md:col-span-2 md:row-span-2'
+                  : project.size === 'medium'
+                  ? 'md:row-span-2'
+                  : '';
 
               return (
                 <motion.div
@@ -92,10 +96,25 @@ export default function Projects() {
                     whileHover={{ scale: 0.98 }}
                     className="h-full bg-neutral-900/50 border border-white/5 rounded-2xl p-6 flex flex-col justify-between overflow-hidden hover:border-white/20 transition-all duration-300"
                   >
-                    {/* Background Pattern */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent" />
-                    </div>
+                    {/* Background Image */}
+                    {project.image && (
+                      <div className="absolute inset-0 z-0">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover opacity-20 group-hover:opacity-30 transition-opacity duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/80 to-neutral-900/60" />
+                      </div>
+                    )}
+
+                    {/* Background Pattern (when no image) */}
+                    {!project.image && (
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent" />
+                      </div>
+                    )}
 
                     {/* Top Section */}
                     <div className="relative z-10">
@@ -109,11 +128,11 @@ export default function Projects() {
                           </span>
                         )}
                       </div>
-                      
+
                       <h3 className="text-xl md:text-2xl font-medium text-white mb-2 group-hover:text-neutral-200 transition-colors">
                         {project.title}
                       </h3>
-                      
+
                       <p className="text-neutral-500 text-sm leading-relaxed">
                         {project.description}
                       </p>
@@ -124,10 +143,10 @@ export default function Projects() {
                       {/* Tech Icons */}
                       <div className="flex items-center gap-3 mb-4">
                         {project.tech.map((Icon, techIndex) => (
-                          <Icon 
-                            key={techIndex} 
-                            size={16} 
-                            className="text-neutral-600 group-hover:text-neutral-400 transition-colors" 
+                          <Icon
+                            key={techIndex}
+                            size={16}
+                            className="text-neutral-600 group-hover:text-neutral-400 transition-colors"
                           />
                         ))}
                       </div>
@@ -135,9 +154,9 @@ export default function Projects() {
                       {/* Links - Show on Hover */}
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
-                        animate={{ 
-                          opacity: isHovered ? 1 : 0, 
-                          y: isHovered ? 0 : 10 
+                        animate={{
+                          opacity: isHovered ? 1 : 0,
+                          y: isHovered ? 0 : 10,
                         }}
                         className="flex items-center gap-4"
                       >

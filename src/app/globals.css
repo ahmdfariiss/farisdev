@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --primary: #ffffff;
@@ -41,7 +41,7 @@ body {
 /* Glowing Text Effect */
 .glow-text {
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
-               0 0 40px rgba(255, 255, 255, 0.1);
+    0 0 40px rgba(255, 255, 255, 0.1);
 }
 
 /* Gradient Text - Monochrome */
@@ -73,15 +73,26 @@ body {
 }
 
 @keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Floating Animation */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .floating {
@@ -90,8 +101,13 @@ body {
 
 /* Pulse Glow - Monochrome */
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
-  50% { box-shadow: 0 0 40px rgba(255, 255, 255, 0.2); }
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+  }
 }
 
 .pulse-glow {
@@ -110,7 +126,9 @@ body {
 
 /* Skill Bar Animation */
 @keyframes skillLoad {
-  from { width: 0%; }
+  from {
+    width: 0%;
+  }
 }
 
 .skill-bar {
@@ -126,7 +144,14 @@ body {
   content: '';
   position: absolute;
   inset: -2px;
-  background: linear-gradient(45deg, #ffffff, #737373, #ffffff, #525252, #ffffff);
+  background: linear-gradient(
+    45deg,
+    #ffffff,
+    #737373,
+    #ffffff,
+    #525252,
+    #ffffff
+  );
   background-size: 400%;
   border-radius: inherit;
   z-index: -1;
@@ -136,14 +161,23 @@ body {
 }
 
 @keyframes borderRotate {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 400% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 400% 50%;
+  }
 }
 
 /* Section Divider - Monochrome */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
 }
 
 /* Hide scrollbar for horizontal scroll */
@@ -189,5 +223,11 @@ body {
 
 /* Blur gradient edges */
 .blur-edge {
-  mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
 }

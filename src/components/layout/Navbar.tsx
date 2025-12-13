@@ -81,7 +81,11 @@ export default function Navbar() {
                     <motion.div
                       layoutId="activeNav"
                       className="absolute inset-0 bg-white/10 rounded-full border border-white/20"
-                      transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                      transition={{
+                        type: 'spring',
+                        bounce: 0.2,
+                        duration: 0.6,
+                      }}
                     />
                   )}
                   <span className="relative z-10">{item.name}</span>

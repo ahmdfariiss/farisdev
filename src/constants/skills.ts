@@ -33,4 +33,10 @@ export const skills: Skill[] = [
   { name: 'Figma', icon: SiFigma, level: 70, category: 'tools' },
 ];
 
-export const skillCategories = ['All', 'Frontend', 'Backend', 'IoT', 'Tools'] as const;
+export const skillCategories = [
+  'All',
+  'Frontend',
+  'Backend',
+  'IoT',
+  'Tools',
+] as const;

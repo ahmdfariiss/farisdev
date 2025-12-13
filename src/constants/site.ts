@@ -5,7 +5,8 @@
 export const siteConfig = {
   name: 'Your Name',
   title: 'Portfolio | Your Name',
-  description: 'Mahasiswa semester 5 yang passionate dalam membangun website modern dan mengembangkan solusi IoT yang inovatif.',
+  description:
+    'Mahasiswa semester 5 yang passionate dalam membangun website modern dan mengembangkan solusi IoT yang inovatif.',
   url: 'https://yourportfolio.com',
   email: 'your.email@example.com',
   location: 'Jakarta, Indonesia',

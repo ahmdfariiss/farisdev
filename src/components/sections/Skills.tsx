@@ -3,12 +3,13 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { skills } from '@/constants';
+import { useCMSSkills } from '@/hooks/useCMSData';
 
 export default function Skills() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const skills = useCMSSkills();
 
   return (
     <section id="skills" className="py-32 relative bg-neutral-950/50">
@@ -31,14 +32,15 @@ export default function Skills() {
                 <span className="text-neutral-600">Technologies</span>
               </h2>
             </motion.div>
-            
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.2, duration: 0.6 }}
               className="text-neutral-500 max-w-sm lg:text-right"
             >
-              Constantly learning and adapting to new technologies to build better solutions.
+              Constantly learning and adapting to new technologies to build
+              better solutions.
             </motion.p>
           </div>
 
@@ -48,7 +50,7 @@ export default function Skills() {
               const isHovered = hoveredSkill === skill.name;
               // Create visual interest with varying heights
               const isLarge = index % 5 === 0;
-              
+
               return (
                 <motion.div
                   key={skill.name}
@@ -67,18 +69,18 @@ export default function Skills() {
                   >
                     {/* Icon */}
                     <motion.div
-                      animate={{ 
+                      animate={{
                         scale: isHovered ? 1.2 : 1,
-                        rotate: isHovered ? 360 : 0 
+                        rotate: isHovered ? 360 : 0,
                       }}
                       transition={{ duration: 0.4 }}
                     >
-                      <skill.icon 
-                        size={isLarge ? 40 : 28} 
-                        className="text-neutral-400 group-hover:text-white transition-colors duration-300" 
+                      <skill.icon
+                        size={isLarge ? 40 : 28}
+                        className="text-neutral-400 group-hover:text-white transition-colors duration-300"
                       />
                     </motion.div>
-                    
+
                     {/* Name */}
                     <span className="text-sm text-neutral-400 group-hover:text-white transition-colors">
                       {skill.name}
@@ -87,9 +89,9 @@ export default function Skills() {
                     {/* Level Indicator - Show on Hover */}
                     <motion.div
                       initial={{ opacity: 0, scaleX: 0 }}
-                      animate={{ 
-                        opacity: isHovered ? 1 : 0, 
-                        scaleX: isHovered ? 1 : 0 
+                      animate={{
+                        opacity: isHovered ? 1 : 0,
+                        scaleX: isHovered ? 1 : 0,
                       }}
                       className="absolute bottom-0 left-0 right-0 h-1 bg-white/10 rounded-b-2xl overflow-hidden"
                     >
@@ -126,8 +128,12 @@ export default function Skills() {
                   transition={{ delay: 0.9 + index * 0.1 }}
                   className="text-center"
                 >
-                  <div className="text-3xl md:text-4xl font-bold text-white mb-2">{stat.value}</div>
-                  <div className="text-xs text-neutral-600 uppercase tracking-wider">{stat.label}</div>
+                  <div className="text-3xl md:text-4xl font-bold text-white mb-2">
+                    {stat.value}
+                  </div>
+                  <div className="text-xs text-neutral-600 uppercase tracking-wider">
+                    {stat.label}
+                  </div>
                 </motion.div>
               ))}
             </div>

@@ -3,16 +3,14 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import {
-  FaEnvelope,
-  FaMapMarkerAlt,
-  FaPaperPlane,
-} from 'react-icons/fa';
+import { FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa';
 import { socialLinks } from '@/constants';
+import { useCMSProfile } from '@/hooks/useCMSData';
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const profile = useCMSProfile();
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -45,7 +43,6 @@ export default function Contact() {
       {/* LAYOUT: Right-Aligned Minimal with Left Form */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div ref={ref} className="grid lg:grid-cols-2 gap-16 lg:gap-24">
-          
           {/* Left Side - Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -65,7 +62,7 @@ export default function Contact() {
                   className="w-full px-0 py-4 bg-transparent border-b border-white/10 text-white placeholder-neutral-600 focus:outline-none focus:border-white/30 transition-colors text-lg"
                 />
               </div>
-              
+
               <div>
                 <input
                   type="email"
@@ -77,7 +74,7 @@ export default function Contact() {
                   className="w-full px-0 py-4 bg-transparent border-b border-white/10 text-white placeholder-neutral-600 focus:outline-none focus:border-white/30 transition-colors text-lg"
                 />
               </div>
-              
+
               <div>
                 <textarea
                   name="message"
@@ -97,10 +94,16 @@ export default function Contact() {
                 whileTap={{ scale: 0.98 }}
                 className="group flex items-center gap-3 mt-8"
               >
-                <span className={`text-lg font-medium transition-colors ${
-                  isSubmitted ? 'text-white' : 'text-white'
-                }`}>
-                  {isSubmitting ? 'Sending...' : isSubmitted ? 'Message Sent!' : 'Send Message'}
+                <span
+                  className={`text-lg font-medium transition-colors ${
+                    isSubmitted ? 'text-white' : 'text-white'
+                  }`}
+                >
+                  {isSubmitting
+                    ? 'Sending...'
+                    : isSubmitted
+                    ? 'Message Sent!'
+                    : 'Send Message'}
                 </span>
                 <motion.div
                   animate={{ x: isSubmitting ? 10 : 0 }}
@@ -113,7 +116,10 @@ export default function Contact() {
                       className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
                     />
                   ) : (
-                    <FaPaperPlane size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <FaPaperPlane
+                      size={14}
+                      className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                    />
                   )}
                 </motion.div>
               </motion.button>
@@ -132,20 +138,21 @@ export default function Contact() {
                 Get in Touch
               </span>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
-                Let&apos;s Work<br />
+                Let&apos;s Work
+                <br />
                 <span className="text-neutral-600">Together</span>
               </h2>
-              
+
               <p className="text-neutral-500 leading-relaxed mb-12 max-w-md">
-                Tertarik untuk berkolaborasi atau punya pertanyaan? 
-                Jangan ragu untuk menghubungi saya.
+                Tertarik untuk berkolaborasi atau punya pertanyaan? Jangan ragu
+                untuk menghubungi saya.
               </p>
             </div>
 
             {/* Contact Info */}
             <div className="space-y-6">
               <motion.a
-                href="mailto:your.email@example.com"
+                href={`mailto:${profile.email}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.3 }}
@@ -155,7 +162,7 @@ export default function Contact() {
                 <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/30 transition-colors">
                   <FaEnvelope size={16} />
                 </div>
-                <span className="text-lg">your.email@example.com</span>
+                <span className="text-lg">{profile.email}</span>
               </motion.a>
 
               <motion.div
@@ -167,7 +174,7 @@ export default function Contact() {
                 <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center">
                   <FaMapMarkerAlt size={16} />
                 </div>
-                <span className="text-lg">Jakarta, Indonesia</span>
+                <span className="text-lg">{profile.location}</span>
               </motion.div>
 
               {/* Social Links */}

@@ -36,6 +36,7 @@ export type ProjectCategory = 'Web' | 'IoT';
 export interface Project {
   title: string;
   description: string;
+  image?: string;
   category: ProjectCategory;
   tech: React.ComponentType<{ size?: number; className?: string }>[];
   github: string;
