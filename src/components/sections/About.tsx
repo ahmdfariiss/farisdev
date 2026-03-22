@@ -1,9 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import { FaCode, FaRocket } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { FaCode, FaMicrochip } from 'react-icons/fa';
 import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
 
@@ -13,261 +12,187 @@ interface ProfileData {
   avatar: string;
 }
 
-interface HighlightData {
-  icon: string;
-  title: string;
-  description: string;
-}
-
 interface StatData {
   value: string;
   label: string;
 }
 
-// Default data sebagai fallback
 const defaultProfile: ProfileData = {
   name: 'Ahmad Faris',
   bio: [
-    'Passionate about building web applications and IoT solutions.',
-    'Currently pursuing my degree while working on various projects.',
+    'Passionate about building web applications and IoT solutions that make a difference.',
+    'Currently in my final semesters, sharpening my craft in full-stack development and embedded systems.',
   ],
-  avatar: '/avatar.jpg', // Default avatar path
+  avatar: '/avatar.jpg',
 };
-
-const defaultHighlights: HighlightData[] = [
-  {
-    icon: 'FaCode',
-    title: 'Web Development',
-    description: 'Building modern web apps',
-  },
-  {
-    icon: 'FaRocket',
-    title: 'IoT Projects',
-    description: 'Smart devices & automation',
-  },
-];
 
 const defaultStats: StatData[] = [
   { value: '10+', label: 'Projects' },
-  { value: '2+', label: 'Years Experience' },
+  { value: '2+', label: 'Years Coding' },
   { value: '5+', label: 'Technologies' },
 ];
 
-// Icon mapping
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  FaCode: FaCode,
-  FaRocket: FaRocket,
-};
-
 export default function About() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
+  const containerRef = useRef<HTMLDivElement>(null);
   const [profile, setProfile] = useState<ProfileData>(defaultProfile);
-  const [highlights, setHighlights] =
-    useState<HighlightData[]>(defaultHighlights);
   const [stats, setStats] = useState<StatData[]>(defaultStats);
 
   useEffect(() => {
-    // Fetch dari Supabase
     const fetchData = async () => {
       try {
-        // Fetch profile
         const { data: profileData } = await supabase
           .from('profile')
           .select('name, bio, avatar')
           .single();
+        if (profileData) setProfile(profileData);
 
-        if (profileData) {
-          setProfile(profileData);
-        }
-
-        // Fetch highlights
-        const { data: highlightsData } = await supabase
-          .from('highlights')
-          .select('icon, title, description')
-          .order('order_index');
-
-        if (highlightsData && highlightsData.length > 0) {
-          setHighlights(highlightsData);
-        }
-
-        // Fetch stats
-        const { data: statsData, error: statsError } = await supabase
-          .from('stats')
-          .select('value, label');
-
-        console.log('Stats from DB:', statsData, statsError);
-
-        if (statsData && statsData.length > 0) {
-          setStats(statsData);
-        }
-      } catch (error) {
-        console.error('About fetch error:', error);
-        // Keep default data on error
+        const { data: statsData } = await supabase.from('stats').select('value, label');
+        if (statsData && statsData.length > 0) setStats(statsData);
+      } catch (e) {
+        console.error('About fetch error:', e);
       }
     };
-
     fetchData();
   }, []);
+
+  const inViewVariant = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] },
+    }),
+  };
 
   return (
     <section id="about" className="py-32 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section header */}
         <motion.div
-          ref={ref}
-          className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16"
         >
-          {/* Left Column - Text Content */}
-          <div className="lg:col-span-7 order-2 lg:order-1">
-            {/* Section Label */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.5 }}
-              className="flex items-center gap-4 mb-8"
-            >
-              <div className="w-12 h-px bg-white/30" />
-              <span className="text-xs tracking-[0.3em] text-neutral-500 uppercase">
-                About Me
-              </span>
-            </motion.div>
+          <span className="section-label block mb-4">The Human Behind the Code</span>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-[var(--text-primary)] leading-none">
+            About<br />
+            <span className="text-neutral-600">Me</span>
+          </h2>
+        </motion.div>
 
-            {/* Main Heading */}
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.1, duration: 0.5 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight"
-            >
-              Building Digital
-              <br />
-              <span className="text-neutral-500">Experiences</span>
-            </motion.h2>
+        {/* Bento grid */}
+        <div ref={containerRef} className="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
-            {/* Description */}
+          {/* === Tile 1: Large — Profile photo + Bio === */}
+          <motion.div
+            custom={0}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={inViewVariant}
+            className="lg:col-span-7 bento-tile p-8 md:p-10 flex flex-col md:flex-row gap-8 items-start"
+          >
+            {/* Avatar */}
+            <div className="relative shrink-0">
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border border-[var(--border)] relative">
+                {profile.avatar ? (
+                  <Image
+                    src={profile.avatar}
+                    alt={profile.name}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[var(--surface)] flex items-center justify-center">
+                    <span className="text-4xl">👤</span>
+                  </div>
+                )}
+              </div>
+              {/* Online indicator */}
+              <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[var(--accent)] rounded-full border-2 border-[var(--bg)] flex items-center justify-center">
+                <div className="w-2 h-2 bg-[var(--bg)] rounded-full" />
+              </div>
+            </div>
+
+            {/* Text */}
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-[var(--accent)] text-xs font-mono">●</span>
+                <span className="section-label">Available for opportunities</span>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-4">{profile.name}</h3>
+              <div className="space-y-3">
+                {profile.bio.map((para, i) => (
+                  <p key={i} className="text-[var(--text-secondary)] leading-relaxed text-sm md:text-base">{para}</p>
+                ))}
+              </div>
+
+              {/* Highlight badges */}
+              <div className="flex flex-wrap gap-3 mt-6">
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--border)] bg-white/3 text-sm text-neutral-300">
+                  <FaCode className="text-[var(--accent)]" size={12} />
+                  Web Development
+                </div>
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--border)] bg-white/3 text-sm text-neutral-300">
+                  <FaMicrochip className="text-[var(--accent)]" size={12} />
+                  IoT Engineering
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* === Right column: Stats + Philosophy === */}
+          <div className="lg:col-span-5 flex flex-col gap-4">
+            {/* Stats */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="space-y-4 text-neutral-400 leading-relaxed mb-10 max-w-xl"
+              custom={1}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={inViewVariant}
+              className="bento-tile p-6 grid grid-cols-3 gap-4"
             >
-              {profile.bio.map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
+              {stats.map((stat, i) => (
+                <div key={i} className="text-center">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 + i * 0.1, type: 'spring', stiffness: 200 }}
+                    className="text-3xl md:text-4xl font-black text-[var(--text-primary)] mb-1"
+                  >
+                    {stat.value}
+                  </motion.div>
+                  <div className="section-label text-neutral-600">{stat.label}</div>
+                </div>
               ))}
             </motion.div>
 
-            {/* Highlights */}
+            {/* Philosophy / Quote tile */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="flex flex-wrap gap-4"
+              custom={2}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={inViewVariant}
+              className="bento-tile p-8 flex-1 flex flex-col justify-between"
             >
-              {highlights.map((item, index) => {
-                const IconComp = iconMap[item.icon] || FaCode;
-                return (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.4 + index * 0.1 }}
-                    whileHover={{
-                      y: -4,
-                      borderColor: 'rgba(255,255,255,0.3)',
-                    }}
-                    className="flex items-center gap-3 px-5 py-3 bg-white/5 border border-white/10 rounded-full"
-                  >
-                    <IconComp className="text-white/60" />
-                    <div>
-                      <span className="text-white text-sm font-medium">
-                        {item.title}
-                      </span>
-                      <span className="text-neutral-500 text-xs ml-2">
-                        {item.description}
-                      </span>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          </div>
-
-          {/* Right Column - Stats */}
-          <div className="lg:col-span-5 order-1 lg:order-2">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="relative"
-            >
-              {/* Stats Card */}
-              <div className="relative aspect-square max-w-md mx-auto">
-                {/* Background Frame */}
-                <div className="absolute inset-4 border border-white/10 rounded-2xl" />
-                <div className="absolute inset-8 border border-white/5 rounded-xl" />
-
-                {/* Center Content - Avatar Photo */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <motion.div
-                    animate={{ rotate: [0, 360] }}
-                    transition={{
-                      duration: 30,
-                      repeat: Infinity,
-                      ease: 'linear',
-                    }}
-                    className="absolute w-56 h-56 border border-dashed border-white/10 rounded-full"
-                  />
-                  {/* Avatar Image */}
-                  <div className="relative w-40 h-40 rounded-full overflow-hidden border-2 border-white/20">
-                    {profile.avatar ? (
-                      <Image
-                        src={profile.avatar}
-                        alt={profile.name}
-                        fill
-                        className="object-cover"
-                        priority
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-neutral-800 flex items-center justify-center">
-                        <span className="text-4xl text-neutral-600">👤</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Stats positioned around */}
-                <div className="absolute inset-0">
-                  {stats.map((stat, index) => {
-                    const positions = [
-                      'top-8 left-1/2 -translate-x-1/2',
-                      'bottom-16 left-8',
-                      'bottom-16 right-8',
-                    ];
-                    return (
-                      <motion.div
-                        key={stat.label}
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                        transition={{ delay: 0.5 + index * 0.2 }}
-                        className={`absolute ${
-                          positions[index] || ''
-                        } text-center`}
-                      >
-                        <div className="text-3xl font-bold text-white">
-                          {stat.value}
-                        </div>
-                        <div className="text-xs text-neutral-500 uppercase tracking-wider">
-                          {stat.label}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
+              <span className="section-label mb-6 block">Philosophy</span>
+              <blockquote className="text-2xl md:text-3xl font-black text-[var(--text-primary)] leading-tight">
+                "Build things that{' '}
+                <span className="text-[var(--accent)]">matter</span>,
+                learn things that{' '}
+                <span className="text-neutral-500">last</span>."
+              </blockquote>
+              <div className="mt-6 flex items-center gap-3">
+                <div className="w-8 h-px bg-white/20" />
+                <span className="text-xs text-neutral-600 font-mono">Ahmad Faris</span>
               </div>
             </motion.div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

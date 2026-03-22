@@ -100,7 +100,7 @@ export default function Experience() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-xs tracking-[0.3em] text-neutral-500 uppercase block mb-4"
+            className="text-xs tracking-[0.3em] text-[var(--text-secondary)] uppercase block mb-4"
           >
             My Journey
           </motion.span>
@@ -109,7 +109,7 @@ export default function Experience() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold text-[var(--text-primary)] mb-8"
           >
             Experience
           </motion.h2>
@@ -120,14 +120,14 @@ export default function Experience() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 p-1.5 bg-white/5 rounded-2xl border border-white/10"
+            className="inline-flex items-center gap-2 p-1.5 bg-[var(--surface-2)] rounded-2xl border border-[var(--border)]"
           >
             <button
               onClick={() => handleTabChange('work')}
               className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
                 activeTab === 'work'
                   ? 'bg-white text-black shadow-lg'
-                  : 'text-neutral-400 hover:text-white'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
               }`}
             >
               <FaBriefcase size={14} />
@@ -138,7 +138,7 @@ export default function Experience() {
               className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
                 activeTab === 'education'
                   ? 'bg-white text-black shadow-lg'
-                  : 'text-neutral-400 hover:text-white'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
               }`}
             >
               <FaGraduationCap size={14} />
@@ -155,17 +155,17 @@ export default function Experience() {
             viewport={{ once: true }}
             className="text-center py-20"
           >
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[var(--surface-2)] border border-[var(--border)] flex items-center justify-center">
               {activeTab === 'work' ? (
-                <FaBriefcase size={32} className="text-neutral-600" />
+                <FaBriefcase size={32} className="text-[var(--text-muted)]" />
               ) : (
-                <FaGraduationCap size={32} className="text-neutral-600" />
+                <FaGraduationCap size={32} className="text-[var(--text-muted)]" />
               )}
             </div>
-            <h3 className="text-xl font-medium text-neutral-400 mb-2">
+            <h3 className="text-xl font-medium text-[var(--text-secondary)] mb-2">
               No {activeTab === 'work' ? 'Work Experience' : 'Education'} Yet
             </h3>
-            <p className="text-neutral-600 max-w-md mx-auto">
+            <p className="text-[var(--text-muted)] max-w-md mx-auto">
               {activeTab === 'work'
                 ? 'Work experience will appear here once added through the CMS.'
                 : 'Education history will appear here once added through the CMS.'}
@@ -191,12 +191,12 @@ export default function Experience() {
                 animate={{ opacity: 1, scale: 1, rotateY: 0 }}
                 exit={{ opacity: 0, scale: 0.95, rotateY: 10 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                className="relative bg-linear-to-br from-neutral-900 to-neutral-950 border border-white/10 rounded-3xl p-8 md:p-10 overflow-hidden"
+                className="relative bg-linear-to-br from-[var(--surface)] to-[var(--surface-2)] border border-[var(--border)] rounded-3xl p-8 md:p-10 overflow-hidden"
               >
                 {/* Decorative Corner */}
                 <div className="absolute top-0 right-0 w-32 h-32">
-                  <div className="absolute top-4 right-4 w-20 h-20 border border-white/10 rounded-full" />
-                  <div className="absolute top-8 right-8 w-10 h-10 border border-white/5 rounded-full" />
+                  <div className="absolute top-4 right-4 w-20 h-20 border border-[var(--border)] rounded-full" />
+                  <div className="absolute top-8 right-8 w-10 h-10 border border-[var(--border-hover)] rounded-full" />
                 </div>
 
                 {/* Year Badge */}
@@ -204,14 +204,14 @@ export default function Experience() {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10 mb-6"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--surface-2)] rounded-full border border-[var(--border)] mb-6"
                 >
                   <div
                     className={`w-2 h-2 rounded-full ${
                       activeTab === 'work' ? 'bg-blue-400' : 'bg-green-400'
                     } animate-pulse`}
                   />
-                  <span className="text-sm font-mono text-neutral-400">
+                  <span className="text-sm font-mono text-[var(--text-secondary)]">
                     {currentItem?.period}
                   </span>
                 </motion.div>
@@ -222,14 +222,14 @@ export default function Experience() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                  <h3 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-2">
                     {getItemTitle(currentItem, activeTab)}
                   </h3>
-                  <div className="flex items-center gap-2 text-neutral-400 mb-6">
+                  <div className="flex items-center gap-2 text-[var(--text-secondary)] mb-6">
                     <FaMapMarkerAlt size={12} />
                     <span>{getItemPlace(currentItem, activeTab)}</span>
                   </div>
-                  <p className="text-neutral-500 leading-relaxed mb-6">
+                  <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
                     {currentItem?.description}
                   </p>
 
@@ -259,10 +259,10 @@ export default function Experience() {
                 </motion.div>
 
                 {/* Navigation */}
-                <div className="flex items-center justify-between mt-8 pt-6 border-t border-white/5">
+                <div className="flex items-center justify-between mt-8 pt-6 border-t border-[var(--border)]">
                   <button
                     onClick={handlePrev}
-                    className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors"
+                    className="flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
                   >
                     <HiArrowLeft size={18} />
                     <span className="text-sm">Previous</span>
@@ -279,14 +279,14 @@ export default function Experience() {
                                   ? 'bg-blue-400'
                                   : 'bg-green-400'
                               }`
-                            : 'w-1.5 bg-white/20 hover:bg-white/40'
+                            : 'w-1.5 bg-[var(--surface-2)] hover:bg-[var(--border)]'
                         }`}
                       />
                     ))}
                   </div>
                   <button
                     onClick={handleNext}
-                    className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors"
+                    className="flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
                   >
                     <span className="text-sm">Next</span>
                     <HiArrowRight size={18} />
@@ -322,8 +322,8 @@ export default function Experience() {
                       whileHover={{ x: 8 }}
                       className={`relative w-full text-left pl-16 pr-6 py-4 rounded-2xl transition-all duration-300 ${
                         isActive
-                          ? 'bg-white/5 border border-white/10'
-                          : 'hover:bg-white/2'
+                          ? 'bg-[var(--surface-2)] border border-[var(--border)]'
+                          : 'hover:bg-[var(--surface-2)]'
                       }`}
                     >
                       {/* Timeline Dot */}
@@ -333,7 +333,7 @@ export default function Experience() {
                             ? activeTab === 'work'
                               ? 'bg-blue-500 border-blue-400 shadow-lg shadow-blue-500/50'
                               : 'bg-green-500 border-green-400 shadow-lg shadow-green-500/50'
-                            : 'bg-neutral-900 border-white/20'
+                            : 'bg-[var(--surface)] border-[var(--border-hover)]'
                         }`}
                       >
                         {isActive && (
@@ -350,14 +350,14 @@ export default function Experience() {
                         <div className="flex items-center justify-between mb-1">
                           <h4
                             className={`font-medium transition-colors ${
-                              isActive ? 'text-white' : 'text-neutral-400'
+                              isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'
                             }`}
                           >
                             {getItemTitle(item, activeTab)}
                           </h4>
                           <span
                             className={`text-xs font-mono transition-colors ${
-                              isActive ? 'text-neutral-300' : 'text-neutral-600'
+                              isActive ? 'text-neutral-300' : 'text-[var(--text-muted)]'
                             }`}
                           >
                             {item.period}
@@ -365,7 +365,7 @@ export default function Experience() {
                         </div>
                         <p
                           className={`text-sm transition-colors ${
-                            isActive ? 'text-neutral-400' : 'text-neutral-600'
+                            isActive ? 'text-[var(--text-secondary)]' : 'text-[var(--text-muted)]'
                           }`}
                         >
                           {getItemPlace(item, activeTab)}
@@ -400,35 +400,35 @@ export default function Experience() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.6 }}
-                className="mt-8 p-6 bg-linear-to-r from-white/5 to-transparent rounded-2xl border border-white/5"
+                className="mt-8 p-6 bg-linear-to-r from-[var(--surface-2)] to-transparent rounded-2xl border border-[var(--border)]"
               >
                 <div className="flex items-center justify-around">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-white">
+                    <div className="text-2xl font-bold text-[var(--text-primary)]">
                       {experiences.length}
                     </div>
-                    <div className="text-xs text-neutral-500 uppercase tracking-wider">
+                    <div className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
                       Work Exp
                     </div>
                   </div>
-                  <div className="w-px h-8 bg-white/10" />
+                  <div className="w-px h-8 bg-[var(--border)]" />
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-white">
+                    <div className="text-2xl font-bold text-[var(--text-primary)]">
                       {education.length}
                     </div>
-                    <div className="text-xs text-neutral-500 uppercase tracking-wider">
+                    <div className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
                       Education
                     </div>
                   </div>
-                  <div className="w-px h-8 bg-white/10" />
+                  <div className="w-px h-8 bg-[var(--border)]" />
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-white">
+                    <div className="text-2xl font-bold text-[var(--text-primary)]">
                       {education.reduce(
                         (acc, edu) => acc + (edu.achievements?.length || 0),
                         0
                       )}
                     </div>
-                    <div className="text-xs text-neutral-500 uppercase tracking-wider">
+                    <div className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
                       Achievements
                     </div>
                   </div>

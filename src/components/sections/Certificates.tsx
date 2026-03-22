@@ -9,8 +9,10 @@ import {
   FaChevronRight,
   FaExternalLinkAlt,
 } from 'react-icons/fa';
+
 import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
+import ProgressBar from '@/components/ui/ProgressBar';
 
 interface CertificateData {
   id: string;
@@ -49,18 +51,19 @@ const defaultCertificates: CertificateData[] = [
   },
 ];
 
-export default function Certificates() {
+function Certificates() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [direction, setDirection] = useState(0);
-  const [certificates, setCertificates] =
-    useState<CertificateData[]>(defaultCertificates);
+  const [certificates, setCertificates] = useState<CertificateData[]>(defaultCertificates);
+  const [loading, setLoading] = useState(false);
 
   // Fetch from Supabase
   useEffect(() => {
     const fetchCertificates = async () => {
+      setLoading(true);
       try {
         const { data } = await supabase
           .from('certificates')
@@ -72,6 +75,8 @@ export default function Certificates() {
         }
       } catch (error) {
         console.error('Certificates fetch error:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -132,7 +137,9 @@ export default function Certificates() {
   };
 
   return (
-    <section id="certificates" className="py-32 relative overflow-hidden">
+    <>
+      <ProgressBar loading={loading} estimated={2000} />
+      <section id="certificates" className="py-32 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div ref={ref}>
           {/* Header */}
@@ -142,7 +149,7 @@ export default function Certificates() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5 }}
-                className="text-xs tracking-[0.3em] text-neutral-500 uppercase block mb-4"
+                className="text-xs tracking-[0.3em] text-[var(--text-secondary)] uppercase block mb-4"
               >
                 Achievements
               </motion.span>
@@ -150,10 +157,10 @@ export default function Certificates() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.1, duration: 0.5 }}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-white"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--text-primary)]"
               >
                 Certificates &<br />
-                <span className="text-neutral-600">Credentials</span>
+                <span className="text-[var(--text-muted)]">Credentials</span>
               </motion.h2>
             </div>
 
@@ -167,14 +174,14 @@ export default function Certificates() {
               >
                 <button
                   onClick={prevSlide}
-                  className="p-4 rounded-full border border-white/10 text-neutral-400 hover:text-white hover:border-white/30 transition-all duration-300"
+                  className="p-4 rounded-full border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-hover)] transition-all duration-300"
                   aria-label="Previous certificate"
                 >
                   <FaChevronLeft size={16} />
                 </button>
                 <button
                   onClick={nextSlide}
-                  className="p-4 rounded-full border border-white/10 text-neutral-400 hover:text-white hover:border-white/30 transition-all duration-300"
+                  className="p-4 rounded-full border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-hover)] transition-all duration-300"
                   aria-label="Next certificate"
                 >
                   <FaChevronRight size={16} />
@@ -194,7 +201,7 @@ export default function Certificates() {
           >
             <div className="grid lg:grid-cols-2 gap-8 items-center">
               {/* Certificate Image */}
-              <div className="relative h-80 md:h-96 overflow-hidden rounded-3xl bg-neutral-900 border border-white/10">
+              <div className="relative h-80 md:h-96 overflow-hidden rounded-3xl bg-[var(--surface)] border border-[var(--border)]">
                 <AnimatePresence initial={false} custom={direction} mode="wait">
                   <motion.div
                     key={currentIndex}
@@ -217,7 +224,7 @@ export default function Certificates() {
                         className="object-contain p-4"
                       />
                     ) : (
-                      <div className="flex flex-col items-center justify-center text-neutral-600">
+                      <div className="flex flex-col items-center justify-center text-[var(--text-muted)]">
                         <FaCertificate size={80} />
                         <span className="mt-4 text-sm">
                           Certificate Preview
@@ -238,13 +245,13 @@ export default function Certificates() {
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <span className="text-xs tracking-[0.2em] text-neutral-500 uppercase">
+                    <span className="text-xs tracking-[0.2em] text-[var(--text-secondary)] uppercase">
                       {currentCert?.issuer}
                     </span>
-                    <h3 className="text-3xl md:text-4xl font-bold text-white mt-2 mb-4">
+                    <h3 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mt-2 mb-4">
                       {currentCert?.name}
                     </h3>
-                    <p className="text-neutral-400 mb-6">
+                    <p className="text-[var(--text-secondary)] mb-6">
                       Issued: {currentCert?.date}
                     </p>
 
@@ -253,7 +260,7 @@ export default function Certificates() {
                         href={currentCert.credential_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--surface-2)] border border-[var(--border-hover)] rounded-full text-[var(--text-primary)] hover:bg-[var(--surface-2)] transition-all duration-300"
                       >
                         <span>View Credential</span>
                         <FaExternalLinkAlt size={12} />
@@ -272,7 +279,7 @@ export default function Certificates() {
                         className={`h-2 rounded-full transition-all duration-300 ${
                           index === currentIndex
                             ? 'w-8 bg-white'
-                            : 'w-2 bg-white/30 hover:bg-white/50'
+                            : 'w-2 bg-white/30 hover:bg-[var(--surface-2)]0'
                         }`}
                         aria-label={`Go to certificate ${index + 1}`}
                       />
@@ -290,8 +297,8 @@ export default function Certificates() {
             transition={{ delay: 0.5 }}
             className="flex justify-center mt-12"
           >
-            <div className="flex items-center gap-4 text-neutral-500">
-              <span className="text-4xl font-bold text-white">
+            <div className="flex items-center gap-4 text-[var(--text-secondary)]">
+              <span className="text-4xl font-bold text-[var(--text-primary)]">
                 {String(currentIndex + 1).padStart(2, '0')}
               </span>
               <div className="w-12 h-px bg-white/30" />
@@ -310,7 +317,7 @@ export default function Certificates() {
           >
             <a
               href="/certificates"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 rounded-full text-neutral-400 hover:text-white hover:border-white/40 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-[var(--border-hover)] rounded-full text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-hover)] transition-all duration-300"
             >
               <span>View All Certificates</span>
               <FaExternalLinkAlt size={12} />
@@ -319,5 +326,8 @@ export default function Certificates() {
         </motion.div>
       </div>
     </section>
+  </>
   );
 }
+
+export default Certificates;

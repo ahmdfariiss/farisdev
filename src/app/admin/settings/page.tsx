@@ -66,8 +66,11 @@ export default function SettingsPage() {
     setIsSubmitting(true);
     try {
       // Save highlights - delete all and insert fresh
-      await supabase.from('highlights').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-      
+      await supabase
+        .from('highlights')
+        .delete()
+        .neq('id', '00000000-0000-0000-0000-000000000000');
+
       if (highlightsData.length > 0) {
         const highlightsToInsert = highlightsData.map((h, index) => ({
           icon: h.icon,
@@ -79,8 +82,11 @@ export default function SettingsPage() {
       }
 
       // Save stats - delete all and insert fresh
-      await supabase.from('stats').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-      
+      await supabase
+        .from('stats')
+        .delete()
+        .neq('id', '00000000-0000-0000-0000-000000000000');
+
       if (statsData.length > 0) {
         const statsToInsert = statsData.map((s, index) => ({
           value: s.value,
@@ -206,7 +212,9 @@ export default function SettingsPage() {
                 key={highlight.id}
                 className="flex items-start gap-4 p-4 bg-black rounded-xl"
               >
-                <span className="text-neutral-500 text-sm mt-3">{index + 1}</span>
+                <span className="text-neutral-500 text-sm mt-3">
+                  {index + 1}
+                </span>
                 <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
                   <select
                     value={highlight.icon}
@@ -234,7 +242,11 @@ export default function SettingsPage() {
                     type="text"
                     value={highlight.description}
                     onChange={(e) =>
-                      updateHighlight(highlight.id, 'description', e.target.value)
+                      updateHighlight(
+                        highlight.id,
+                        'description',
+                        e.target.value
+                      )
                     }
                     placeholder="Description"
                     className="px-4 py-3 bg-neutral-900 border border-neutral-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-white/20"
@@ -265,7 +277,8 @@ export default function SettingsPage() {
           </button>
         </div>
         <p className="text-neutral-500 text-sm mb-4">
-          Stats akan ditampilkan di section About (contoh: 10+ Projects, 2+ Years Experience, 3.8 GPA)
+          Stats akan ditampilkan di section About (contoh: 10+ Projects, 2+
+          Years Experience, 3.8 GPA)
         </p>
         <div className="space-y-4">
           {statsData.length === 0 ? (
@@ -283,14 +296,18 @@ export default function SettingsPage() {
                   <input
                     type="text"
                     value={stat.value}
-                    onChange={(e) => updateStat(stat.id, 'value', e.target.value)}
+                    onChange={(e) =>
+                      updateStat(stat.id, 'value', e.target.value)
+                    }
                     placeholder="Value (e.g., 10+)"
                     className="px-4 py-3 bg-neutral-900 border border-neutral-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-white/20"
                   />
                   <input
                     type="text"
                     value={stat.label}
-                    onChange={(e) => updateStat(stat.id, 'label', e.target.value)}
+                    onChange={(e) =>
+                      updateStat(stat.id, 'label', e.target.value)
+                    }
                     placeholder="Label (e.g., Projects)"
                     className="px-4 py-3 bg-neutral-900 border border-neutral-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-white/20"
                   />

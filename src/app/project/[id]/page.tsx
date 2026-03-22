@@ -33,19 +33,19 @@ export default function ProjectDetailPage() {
 
   if (!isMounted || loading) {
     return (
-      <div className="min-h-screen bg-neutral-950 flex items-center justify-center">
-        <div className="animate-pulse text-white">Loading...</div>
+      <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center">
+        <div className="animate-pulse text-[var(--text-primary)]">Loading...</div>
       </div>
     );
   }
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-neutral-950 flex flex-col items-center justify-center gap-4">
-        <h1 className="text-2xl text-white">Project tidak ditemukan</h1>
+      <div className="min-h-screen bg-[var(--bg)] flex flex-col items-center justify-center gap-4">
+        <h1 className="text-2xl text-[var(--text-primary)]">Project tidak ditemukan</h1>
         <Link
           href="/#projects"
-          className="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
+          className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-2"
         >
           <FaArrowLeft />
           Kembali ke Projects
@@ -71,7 +71,7 @@ export default function ProjectDetailPage() {
   };
 
   return (
-    <main className="min-h-screen bg-neutral-950 pt-24 pb-16">
+    <main className="min-h-screen bg-[var(--bg)] pt-24 pb-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <motion.div
@@ -81,7 +81,7 @@ export default function ProjectDetailPage() {
         >
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors group"
+            className="flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors group"
           >
             <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
             Kembali
@@ -96,19 +96,19 @@ export default function ProjectDetailPage() {
           className="mb-12"
         >
           <div className="flex flex-wrap items-center gap-4 mb-4">
-            <span className="text-xs text-neutral-600 font-mono uppercase tracking-wider px-3 py-1 bg-white/5 rounded-full">
+            <span className="text-xs text-[var(--text-muted)] font-mono uppercase tracking-wider px-3 py-1 bg-[var(--surface)] rounded-full">
               {project.category}
             </span>
             {project.featured && (
-              <span className="text-xs text-black bg-white px-3 py-1 rounded-full font-medium">
+              <span className="text-xs text-[var(--bg)] bg-[var(--text-primary)] px-3 py-1 rounded-full font-medium">
                 Featured
               </span>
             )}
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] mb-4">
             {project.title}
           </h1>
-          <p className="text-xl text-neutral-400 max-w-3xl">
+          <p className="text-xl text-[var(--text-secondary)] max-w-3xl">
             {project.description}
           </p>
         </motion.div>
@@ -121,7 +121,7 @@ export default function ProjectDetailPage() {
             transition={{ delay: 0.2 }}
             className="mb-12"
           >
-            <div className="relative aspect-video rounded-2xl overflow-hidden bg-neutral-900/50 border border-white/5">
+            <div className="relative aspect-video rounded-2xl overflow-hidden bg-[var(--surface-2)] border border-[var(--border)]">
               <Image
                 src={allImages[activeImage]}
                 alt={project.title}
@@ -134,15 +134,15 @@ export default function ProjectDetailPage() {
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-[var(--surface-2)] rounded-full hover:bg-[var(--border)] transition-colors"
                   >
-                    <FaChevronLeft className="text-white" />
+                    <FaChevronLeft className="text-[var(--text-primary)]" />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-[var(--surface-2)] rounded-full hover:bg-[var(--border)] transition-colors"
                   >
-                    <FaChevronRight className="text-white" />
+                    <FaChevronRight className="text-[var(--text-primary)]" />
                   </button>
 
                   {/* Dots */}
@@ -152,7 +152,7 @@ export default function ProjectDetailPage() {
                         key={i}
                         onClick={() => setActiveImage(i)}
                         className={`w-2 h-2 rounded-full transition-all ${
-                          i === activeImage ? 'bg-white w-6' : 'bg-white/50'
+                          i === activeImage ? 'bg-white w-6' : 'bg-[var(--surface)]0'
                         }`}
                       />
                     ))}
@@ -192,10 +192,10 @@ export default function ProjectDetailPage() {
           >
             {/* Full Description */}
             <div>
-              <h2 className="text-xl font-semibold text-white mb-4">
+              <h2 className="text-xl font-semibold text-[var(--text-primary)] mb-4">
                 Tentang Project
               </h2>
-              <div className="text-neutral-400 leading-relaxed whitespace-pre-line">
+              <div className="text-[var(--text-secondary)] leading-relaxed whitespace-pre-line">
                 {project.full_description || project.description}
               </div>
             </div>
@@ -203,14 +203,14 @@ export default function ProjectDetailPage() {
             {/* Features */}
             {project.features && project.features.length > 0 && (
               <div>
-                <h2 className="text-xl font-semibold text-white mb-4">
+                <h2 className="text-xl font-semibold text-[var(--text-primary)] mb-4">
                   Fitur Utama
                 </h2>
                 <ul className="space-y-3">
                   {project.features.map((feature, i) => (
                     <li
                       key={i}
-                      className="flex items-start gap-3 text-neutral-400"
+                      className="flex items-start gap-3 text-[var(--text-secondary)]"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0" />
                       {feature}
@@ -224,21 +224,21 @@ export default function ProjectDetailPage() {
             {(project.challenges || project.solutions) && (
               <div className="grid md:grid-cols-2 gap-6">
                 {project.challenges && (
-                  <div className="bg-neutral-900/50 border border-white/5 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-3">
+                  <div className="bg-[var(--surface-2)] border border-[var(--border)] rounded-xl p-6">
+                    <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-3">
                       Tantangan
                     </h3>
-                    <p className="text-neutral-400 text-sm leading-relaxed">
+                    <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
                       {project.challenges}
                     </p>
                   </div>
                 )}
                 {project.solutions && (
-                  <div className="bg-neutral-900/50 border border-white/5 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-3">
+                  <div className="bg-[var(--surface-2)] border border-[var(--border)] rounded-xl p-6">
+                    <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-3">
                       Solusi
                     </h3>
-                    <p className="text-neutral-400 text-sm leading-relaxed">
+                    <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
                       {project.solutions}
                     </p>
                   </div>
@@ -255,22 +255,22 @@ export default function ProjectDetailPage() {
             className="space-y-6"
           >
             {/* Links */}
-            <div className="bg-neutral-900/50 border border-white/5 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-white mb-4">Links</h3>
+            <div className="bg-[var(--surface-2)] border border-[var(--border)] rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">Links</h3>
               <div className="space-y-3">
                 {project.github && (
                   <a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-neutral-400 hover:text-white transition-colors group"
+                    className="flex items-center gap-3 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors group"
                   >
-                    <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center group-hover:bg-white/10 transition-colors">
+                    <div className="w-10 h-10 bg-[var(--surface)] rounded-lg flex items-center justify-center group-hover:bg-[var(--border)] transition-colors">
                       <FaGithub size={18} />
                     </div>
                     <div>
                       <div className="text-sm font-medium">Source Code</div>
-                      <div className="text-xs text-neutral-600">
+                      <div className="text-xs text-[var(--text-muted)]">
                         View on GitHub
                       </div>
                     </div>
@@ -281,14 +281,14 @@ export default function ProjectDetailPage() {
                     href={project.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-neutral-400 hover:text-white transition-colors group"
+                    className="flex items-center gap-3 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors group"
                   >
-                    <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center group-hover:bg-white/10 transition-colors">
+                    <div className="w-10 h-10 bg-[var(--surface)] rounded-lg flex items-center justify-center group-hover:bg-[var(--border)] transition-colors">
                       <FaExternalLinkAlt size={16} />
                     </div>
                     <div>
                       <div className="text-sm font-medium">Live Demo</div>
-                      <div className="text-xs text-neutral-600">
+                      <div className="text-xs text-[var(--text-muted)]">
                         View website
                       </div>
                     </div>
@@ -298,8 +298,8 @@ export default function ProjectDetailPage() {
             </div>
 
             {/* Tech Stack */}
-            <div className="bg-neutral-900/50 border border-white/5 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-white mb-4">
+            <div className="bg-[var(--surface-2)] border border-[var(--border)] rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
                 Tech Stack
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -308,7 +308,7 @@ export default function ProjectDetailPage() {
                   return (
                     <div
                       key={i}
-                      className="flex items-center gap-2 px-3 py-2 bg-white/5 rounded-lg text-sm text-neutral-400"
+                      className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] rounded-lg text-sm text-[var(--text-secondary)]"
                     >
                       {Icon && <Icon />}
                       <span>{techName}</span>
@@ -319,9 +319,9 @@ export default function ProjectDetailPage() {
             </div>
 
             {/* Date */}
-            <div className="bg-neutral-900/50 border border-white/5 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-white mb-2">Tanggal</h3>
-              <p className="text-neutral-400 text-sm">
+            <div className="bg-[var(--surface-2)] border border-[var(--border)] rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-2">Tanggal</h3>
+              <p className="text-[var(--text-secondary)] text-sm">
                 {project.created_at
                   ? new Date(project.created_at).toLocaleDateString('id-ID', {
                       year: 'numeric',

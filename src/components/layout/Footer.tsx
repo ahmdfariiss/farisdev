@@ -19,7 +19,7 @@ export default function Footer() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-2xl font-bold text-white"
+            className="text-2xl font-bold text-[var(--text-primary)]"
           >
             Portfolio
           </motion.div>
@@ -39,7 +39,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="p-3 bg-neutral-900/30 border border-white/5 rounded-lg text-neutral-400 hover:text-white hover:border-white/20 transition-all duration-300"
+                className="p-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-hover)] transition-all duration-300"
                 aria-label={social.label}
               >
                 <social.icon size={16} />
@@ -57,14 +57,14 @@ export default function Footer() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-neutral-500 text-sm flex items-center gap-2"
+              className="text-[var(--text-secondary)] text-sm flex items-center gap-2"
             >
               © {new Date().getFullYear()} Made with{' '}
               <motion.span
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ repeat: Infinity, duration: 1.5 }}
               >
-                <FaHeart className="text-white" size={12} />
+                <FaHeart className="text-[var(--text-primary)]" size={12} />
               </motion.span>
             </motion.p>
 
@@ -87,7 +87,7 @@ export default function Footer() {
             onClick={scrollToTop}
             whileHover={{ y: -3 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 text-neutral-500 hover:text-white transition-colors text-xs uppercase tracking-wider"
+            className="flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-xs uppercase tracking-wider"
           >
             <FaArrowUp size={10} />
             Back to Top
