@@ -24,7 +24,7 @@ export default function MagneticButton({
   target,
   rel,
 }: MagneticButtonProps) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<any>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -38,12 +38,12 @@ export default function MagneticButton({
     setPosition({ x: 0, y: 0 });
   };
 
-  const motionProps = {
+  const motionProps: any = {
     ref,
     onMouseMove: handleMouseMove,
     onMouseLeave: handleMouseLeave,
     animate: position,
-    transition: { type: 'spring', stiffness: 200, damping: 20, mass: 0.5 },
+    transition: { type: 'spring', stiffness: 200, damping: 20, mass: 0.5 } as any,
     className: `magnetic-wrap ${className}`,
     onClick,
   };

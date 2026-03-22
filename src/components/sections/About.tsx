@@ -55,7 +55,7 @@ export default function About() {
     fetchData();
   }, []);
 
-  const inViewVariant = {
+  const inViewVariant: any = {
     hidden: { opacity: 0, y: 30 },
     visible: (i: number) => ({
       opacity: 1,
